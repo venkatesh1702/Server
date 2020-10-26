@@ -34,7 +34,7 @@ exports.create = (req, res) => {
             res.send(data);
         }).catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while creating the Note."
+                message: err.message || "Error"
             });
         });
 };
@@ -45,7 +45,7 @@ exports.findAll = (req, res) => {
         res.send(products);
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Some error occurred while retrieving notes."
+            message: err.message || "Error"
         });
     });
 };
