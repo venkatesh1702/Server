@@ -4,17 +4,31 @@ const Product = require('../models/product.model.js');
 exports.create = (req, res) => {
 
     const product = new Product({
-        brandName: req.body.brandName,
-        category: req.body.category,
-        size: req.body.size,
-        dealerName: req.body.dealerName,
-        mobileNumber: req.body.mobileNumber,
-        mailId: req.body.mailId,
-        amountPaid: req.body.amountPaid,
-        amountBalance: req.body.amountBalance
+        productBrand: req.body.productBrand,
+        productName: req.body.productName,
+        productModel: req.body.productModel,
+        productColor: req.body.productColor,
+        MRPPrice: req.body.MRPPrice,
+        RAM: req.body.RAM,
+        internalStorage: req.body.internalStorage,
+        battery: req.body.battery,
+        os: req.body.os,
+        frontCamera: req.body.frontCamera,
+        backCamera: req.body.backCamera,
+        processor: req.body.processor,
+        screenSize: req.body.screenSize,
+        chargerType: req.body.chargerType,
+        manufacturer: req.body.manufacturer,
+        displayType:req.body.displayType,
+        splFeature:req.body.splFeature,
+        resolution:req.body.resolution,
+        itemWeight:req.body.itemWeight,
+        productImg:req.body.productImg,
+        description:req.body.description,
+        boxIncludes:req.body.boxIncludes
     });
 
-    console.log(req.body)
+    // console.log(req.body)
     product.save()
         .then(data => {
             res.send(data);
@@ -25,52 +39,13 @@ exports.create = (req, res) => {
         });
 };
 
-exports.update = (req, res) => {
-    Product.findByIdAndUpdate(req.params.productId, {
-        brandName: req.body.brandName,
-        category: req.body.category,
-        size: req.body.size,
-        dealerName: req.body.dealerName,
-        mobileNumber: req.body.mobileNumber,
-        mailId: req.body.mailId,
-        amountPaid: req.body.amountPaid,
-        amountBalance: req.body.amountBalance
-    }, {new: true})
-    .then(product => {
-        if(!product) {
-            return res.status(404).send({
-                message: "Product not found with id " + req.params.productId
-            });
-        }
-        res.send(product);
+exports.findAll = (req, res) => {
+    Product.find()
+    .then(products => {
+        res.send(products);
     }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Product not found with id " + req.params.productId
-            });                
-        }
-        return res.status(500).send({
-            message: "Error updating product with id " + req.params.productId
-        });
-    });
-};
-exports.findOne = (req, res) => {
-    Product.findById(req.params.productId)
-    .then(product => {
-        if(!product) {
-            return res.status(404).send({
-                message: "Note not Product with id " + req.params.productId
-            });            
-        }
-        res.send(product);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Product not found with id " + req.params.productId
-            });                
-        }
-        return res.status(500).send({
-            message: "Error retrieving product with id " + req.params.productId
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving notes."
         });
     });
 };
