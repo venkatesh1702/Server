@@ -2,18 +2,31 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
+const cors = require("cors");
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => {
+
+const verify = require('./app/Auth/verifytoken')
+
+app.get('/',verify, (req, res) => {
     res.json({"message": "Welcome"});
 });
 
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
+
+// Import Routes
+
+const authRoute = require('./app/Auth/auth')
+// Route Middleware
+
+app.use('/api/user',authRoute)
 
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
