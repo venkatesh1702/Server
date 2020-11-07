@@ -13,7 +13,11 @@ app.use(bodyParser.json())
 
 const verify = require('./app/Auth/verifytoken')
 
-app.get('/',verify, (req, res) => {
+// app.get('/',verify, (req, res) => {
+//     res.json({"message": "Welcome"});
+// });
+
+app.get('/' ,(req, res) => {
     res.json({"message": "Welcome"});
 });
 
@@ -45,3 +49,5 @@ mongoose.connect(dbConfig.url, {
 });
 
 require('./app/routes/product.routes.js')(app);
+require('./app/routes/adminStock.routes')(app);
+require('./app/routes/adminMutualFund.routes')(app);
