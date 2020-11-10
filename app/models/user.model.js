@@ -13,23 +13,17 @@ const userSchema = new mongoose.Schema({
         max: 255,
         min: 6
     },
-    // role:{
-    //     type:String,
-    //     default:"user",
-    //     enum:["user", "admin"]
-    // },
+    role:{
+        type:String,
+        default:"user",
+        enum:["user", "admin"]
+    },
     password: {
         type: String,
         required: true,
         min: 8,
         max: 16
     },
-    // confirmPassword:{
-    //     type:String,
-    //     required:true,
-    //     min:8,
-    //     max:16
-    // },
     date: {
         type: Date,
         default: Date.now

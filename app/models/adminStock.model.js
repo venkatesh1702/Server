@@ -18,6 +18,11 @@ const adminStockSchema = mongoose.Schema({
     brandImg:String,
     sector:String,
     division:String,
+    address:String,
+    phone:String,
+    launchDate:String,
+    email:String,
+    website:String
 },
 {
     timestamps: true

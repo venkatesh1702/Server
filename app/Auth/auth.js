@@ -22,8 +22,7 @@ router.post('/register', async (req, res) => {
     const user = new User({
         name: req.body.name,
         email: req.body.email,
-        // role:req.body.role,
-        // confirmPassword:req.body.confirmPassword,
+        role:req.body.role,
         password:hashPassword
     })
     try {
@@ -36,10 +35,8 @@ router.post('/register', async (req, res) => {
 
 
 router.post('/login', async (req,res) =>{
-    // console.log(req.body)
-    // const {error} = loginValidation(req.body)
-    // console.log(error)
-    // if(error) return res.status(400).send(error.details[0].message)
+
+    console.log(req.body)
 
     const userDetails = await User.findOne({email:req.body.email});
     
@@ -51,11 +48,12 @@ router.post('/login', async (req,res) =>{
 
     // CREATE AND ASSIGN A TOKEN
     const token = jwt.sign({_id:userDetails._id},tokenSecrect);
+    
     res.header('auth-token',token).send(token)
     
+   console.log(token)
 
-
-    res.send('Logged In Success')
+    res.send('Logged in Success')
 })
 
 module.exports = router;

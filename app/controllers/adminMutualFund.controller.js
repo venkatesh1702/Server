@@ -1,6 +1,7 @@
 const AdminMutualFund = require('../models/adminMutualFund.model');
 
 exports.create = (req,res) =>{
+    console.log(req.body)
     const adminMutualFund = new AdminMutualFund({
         fundName:req.body.fundName,
         marketCap:req.body.marketCap,

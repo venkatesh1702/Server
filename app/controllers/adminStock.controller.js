@@ -4,8 +4,8 @@ const multer = require('multer');
 
 exports.create = (req,res)=>{
     
-    console.log(req.file)
     const adminStock = new AdminStock({
+        
         stockName :req.body.stockName,
         marketCap :req.body.marketCap,
         peRatio :req.body.peRatio,
@@ -23,9 +23,9 @@ exports.create = (req,res)=>{
         brandImg:req.body.brandImg,
         sector:req.body.sector,
         division:req.body.division,
-        custodian:req.body.custodian,
-        registerAndTransferAgent:req.body.registerAndTransferAgent,
         address:req.body.address,
+        phone:req.body.phone,
+        launchDate:req.body.launchDate,
         email:req.body.email,
         website:req.body.website
     })
