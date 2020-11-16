@@ -49,9 +49,12 @@ router.post('/login', async (req,res) =>{
     // CREATE AND ASSIGN A TOKEN
     const token = jwt.sign({_id:userDetails._id},tokenSecrect);
     
-    res.header('auth-token',token).send(token)
-    
-   console.log(token)
+    // res.header('auth-token',token).send(token)
+    res.status(200).json({
+        data: { email: userDetails.email, role: userDetails.role },
+        token
+    })
+    console.log(token)
 
     res.send('Logged in Success')
 })
