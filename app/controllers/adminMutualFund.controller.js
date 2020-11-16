@@ -66,7 +66,22 @@ exports.findOne = (req, res) => {
 
 exports.update = (req, res) => {
     console.log(req.query.fundId)
-    AdminMutualFund.findOneAndUpdate({_id: req.query.fundId},{new: true})
+    AdminMutualFund.findOneAndUpdate(req.query.fundId, {
+        fundName:req.body.fundName,
+        marketCap:req.body.marketCap,
+        risk:req.body.risk,
+        nav:req.body.nav,
+        minSIPAmount:req.body.minSIPAmount,
+        minFirstInvestment:req.body.minFirstInvestment,
+        minSecondInvestment:req.body.minSecondInvestment,
+        exitLoad:req.body.exitLoad,
+        fundStarted:req.body.fundStarted,
+        expenseRatio:req.body.expenseRatio,
+        fundSize:req.body.fundSize,
+        rating:req.body.rating,
+        topHoldings:req.body.topHoldings,
+        fundManagers:req.body.fundManagers
+    }, {new: true})
     .then(adminMutualFund => {
         if(!adminMutualFund) {
             return res.status(404).send({
