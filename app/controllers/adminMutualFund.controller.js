@@ -103,22 +103,22 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
     console.log(req.query.fundId)
-    AdminMutualFund.findOneAndDelete(req.query.noteId)
+    AdminMutualFund.findOneAndDelete(req.query.fundId)
     .then(adminMutualFund => {
         if(!adminMutualFund) {
             return res.status(404).send({
-                message: "Mutual Fund not found with id " + req.query.adminMutualFund
+                message: "Mutual Fund not found with id " + req.query.fundId
             });
         }
         res.send({message: "Mutual Fund deleted successfully!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
-                message: "Mutual Fund not found with id " + req.query.adminMutualFund
+                message: "Mutual Fund not found with id " + req.query.fundId
             });                
         }
         return res.status(500).send({
-            message: "Could not delete Mutual Fund with id " + req.query.adminMutualFund
+            message: "Could not delete Mutual Fund with id " + req.query.fundId
         });
     });
 };
