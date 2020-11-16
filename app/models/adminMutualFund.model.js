@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+// mongoose.set('useFindAndModify', false);
+// mongoose.set('useNewUrlParser', true);
+// mongoose.set('useCreateIndex', true);
 
 const adminMutualFund = mongoose.Schema({
     fundName:String,
