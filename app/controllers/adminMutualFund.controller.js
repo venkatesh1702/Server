@@ -1,5 +1,3 @@
-const { query } = require('express');
-const { Query } = require('mongoose');
 const AdminMutualFund = require('../models/adminMutualFund.model');
 
 exports.save = (req,res) =>{
@@ -66,7 +64,7 @@ exports.findOne = (req, res) => {
 
 exports.update = (req, res) => {
     console.log(req.query.fundId)
-    AdminMutualFund.findOneAndUpdate(req.query.fundId, {
+    AdminMutualFund.findOneAndUpdate({_id:req.query.fundId}, {
         fundName:req.body.fundName,
         marketCap:req.body.marketCap,
         risk:req.body.risk,
