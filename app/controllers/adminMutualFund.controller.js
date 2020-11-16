@@ -118,7 +118,7 @@ exports.delete = (req, res) => {
             });                
         }
         return res.status(500).send({
-            message: "Could not delete note with id " + req.query.adminMutualFund
+            message: "Could not delete Mutual Fund with id " + req.query.adminMutualFund
         });
     });
 };
