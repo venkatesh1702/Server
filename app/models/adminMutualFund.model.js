@@ -13,17 +13,18 @@ const adminMutualFund = mongoose.Schema({
     expenseRatio:String,
     fundSize:String,
     rating:String,
+    fundLaunchDate: String,
     topHoldings:{
       type:[]
     },
     fundManagers:{
         type:[]
     },
-    custodian:String,
-    registerAndTransferAgent:String,
-    address:String,
-    email:String,
-    website:String
+    
+    fundPhone: String,
+    fundAddress:String,
+    fundEmail:String,
+    fundWebsite:String
 },{
     timestamps: true
 })

@@ -15,8 +15,13 @@ exports.save = (req,res) =>{
         expenseRatio:req.body.expenseRatio,
         fundSize:req.body.fundSize,
         rating:req.body.rating,
+        fundLaunchDate:req.body.fundLaunchDate,
         topHoldings:req.body.topHoldings,
-        fundManagers:req.body.fundManagers
+        fundManagers:req.body.fundManagers,
+        fundEmail:req.body.fundEmail,
+        fundWebsite: req.body.fundWebsite,
+        fundPhone: req.body.fundPhone,
+        fundAddress:req.body.fundAddress
     })
 
     adminMutualFund.save()
@@ -79,7 +84,7 @@ exports.update = (req, res) => {
         rating:req.body.rating,
         topHoldings:req.body.topHoldings,
         fundManagers:req.body.fundManagers
-    }, {new: true})
+    },{new:true})
     .then(adminMutualFund => {
         if(!adminMutualFund) {
             return res.status(404).send({
@@ -101,7 +106,7 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
     console.log(req.query.fundId)
-    AdminMutualFund.findOneAndDelete(req.query.fundId)
+    AdminMutualFund.findOneAndDelete({_id:req.query.fundId})
     .then(adminMutualFund => {
         if(!adminMutualFund) {
             return res.status(404).send({
