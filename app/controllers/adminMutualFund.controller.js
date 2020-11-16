@@ -1,5 +1,3 @@
-const { query } = require('express');
-const { Query } = require('mongoose');
 const AdminMutualFund = require('../models/adminMutualFund.model');
 
 exports.save = (req,res) =>{
@@ -17,8 +15,13 @@ exports.save = (req,res) =>{
         expenseRatio:req.body.expenseRatio,
         fundSize:req.body.fundSize,
         rating:req.body.rating,
+        fundLaunchDate:req.body.fundLaunchDate,
         topHoldings:req.body.topHoldings,
-        fundManagers:req.body.fundManagers
+        fundManagers:req.body.fundManagers,
+        fundEmail:req.body.fundEmail,
+        fundWebsite: req.body.fundWebsite,
+        fundPhone: req.body.fundPhone,
+        fundAddress:req.body.fundAddress
     })
 
     adminMutualFund.save()
@@ -66,7 +69,7 @@ exports.findOne = (req, res) => {
 
 exports.update = (req, res) => {
     console.log(req.query.fundId)
-    AdminMutualFund.findOneAndUpdate(req.query.fundId, {
+    AdminMutualFund.findOneAndUpdate({_id:req.query.fundId}, {
         fundName:req.body.fundName,
         marketCap:req.body.marketCap,
         risk:req.body.risk,
@@ -81,7 +84,7 @@ exports.update = (req, res) => {
         rating:req.body.rating,
         topHoldings:req.body.topHoldings,
         fundManagers:req.body.fundManagers
-    }, {new: true})
+    },{new:true})
     .then(adminMutualFund => {
         if(!adminMutualFund) {
             return res.status(404).send({
@@ -103,22 +106,22 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
     console.log(req.query.fundId)
-    AdminMutualFund.findOneAndDelete(req.query.noteId)
+    AdminMutualFund.findOneAndDelete({_id:req.query.fundId})
     .then(adminMutualFund => {
         if(!adminMutualFund) {
             return res.status(404).send({
-                message: "Mutual Fund not found with id " + req.query.adminMutualFund
+                message: "Mutual Fund not found with id " + req.query.fundId
             });
         }
         res.send({message: "Mutual Fund deleted successfully!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
-                message: "Mutual Fund not found with id " + req.query.adminMutualFund
+                message: "Mutual Fund not found with id " + req.query.fundId
             });                
         }
         return res.status(500).send({
-            message: "Could not delete Mutual Fund with id " + req.query.adminMutualFund
+            message: "Could not delete Mutual Fund with id " + req.query.fundId
         });
     });
 };
