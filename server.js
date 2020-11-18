@@ -56,3 +56,4 @@ mongoose.connect(dbConfig.url, {
 require('./app/routes/product.routes.js')(app);
 require('./app/routes/adminStock.routes')(app);
 require('./app/routes/adminMutualFund.routes')(app);
+require('./app/routes/user.routes.js')(app);
