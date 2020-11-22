@@ -38,7 +38,7 @@ router.post('/login', async (req,res) =>{
     console.log(req.body)
 
     const userDetails = await User.findOne({email:req.body.email});
-    
+    console.log(userDetails);
     if(!userDetails) return res.status(201).json('Email is not Found')
 
     // PASSWORD IS CORRECT

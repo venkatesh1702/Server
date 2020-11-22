@@ -1,11 +1,15 @@
 const User = require("../models/user.model");
+const bcrypt = require('bcryptjs');
 
-exports.save = (req,res) => {
+
+exports.save = async(req,res) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(req.body.password,salt)
     const user = new User({
         name:req.body.name,
         email:req.body.email,
         role: req.body.role,
-        password: req.body.password
+        password: hashPassword
     })
 
     user.save()
@@ -49,12 +53,14 @@ exports.findOne = (req,res) => {
 }
 
 
-exports.update = (req,res) => {
+exports.update = async(req,res) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(req.body.password,salt)
     const user = {
         name:req.body.name,
         email:req.body.email,
         role: req.body.role,
-        password: req.body.password
+        password: hashPassword
     }
 
     User.findByIdAndUpdate({_id:req.query.userId},user,{new:true})
