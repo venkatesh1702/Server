@@ -2,6 +2,7 @@ const AdminStock = require('../models/adminStock.model');
 const multer = require('multer');
 
 
+<<<<<<< HEAD
 exports.save = (req,res)=>{
     
     const adminStock = new AdminStock({
@@ -28,113 +29,119 @@ exports.save = (req,res)=>{
         email:req.body.email,
         website:req.body.website
     })
+=======
+exports.create = (req, res) => {
+console.log(req.body);
+    const adminStock = new AdminStock({
+>>>>>>> bfa14b1d00030828d193d22feffb20cd421703e8
 
-    adminStock.save()
-    .then(data=>{
-        res.send(data);
-    }).catch(err=>{
-        res.status(500).send({
-            message: err.message || "Error"
-        });
+        stockName: req.body.stockName,
+        marketCap: req.body.marketCap,
+        peRatio: req.body.peRatio,
+        pbRatio: req.body.pbRatio,
+        industryPE: req.body.industryPE,
+        divYield: req.body.divYield,
+        bookValue: req.body.bookValue,
+        epsTTM: req.body.epsTTM,
+        roe: req.body.roe,
+        aboutCompany: req.body.aboutCompany,
+        organization: req.body.organization,
+        foundedYear: req.body.foundedYear,
+        managingDirector: req.body.managingDirector,
+        shareHoldingPattern: req.body.shareHoldingPattern,
+        brandImg: req.body.brandImg,
+        sector: req.body.sector,
+        division: req.body.division,
+        address: req.body.address,
+        phone: req.body.phone,
+        launchDate: req.body.launchDate,
+        email: req.body.email,
+        website: req.body.website
     })
-};
+    
+    adminStock.save()
+        .then(data => {
+            res.send(data);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Error"
+            });
+        })
+}
 
 exports.list = (req, res) => {
     AdminStock.find()
-    .then(adminStock => {
-        res.send(adminStock);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Error"
+        .then((adminStock) => {
+            res.status(200).json(adminStock);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Error"
+            });
         });
-    });
-};
+}
 
-exports.findOne = (req, res) => {
-    console.log(req.query.stockId)
+exports.findOne = (req,res) => {
     AdminStock.findById(req.query.stockId)
     .then(adminStock => {
         if(!adminStock) {
-            return res.status(404).send({
-                message: "Note not found with id " + req.query.stockId
-            });            
+            return res.status(400).json("stock not found");
         }
-        res.send(adminStock);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Note not found with id " + req.query.stockId
-            });                
-        }
-        return res.status(500).send({
-            message: "Error retrieving note with id " + req.query.stockId
-        });
-    });
+        res.status(200).json({data:adminStock})
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: err.message || "Error"
+        })
+    })
 };
 
 exports.update = (req, res) => {
-    console.log(req.query.stockId)
-    AdminStock.findOneAndUpdate({_id:req.query.stockId}, {
-        stockName :req.body.stockName,
-        marketCap :req.body.marketCap,
-        peRatio :req.body.peRatio,
-        pbRatio:req.body.pbRatio,
-        industryPE:req.body.industryPE,
-        divYield:req.body.divYield,
-        bookValue:req.body.bookValue,
-        epsTTM:req.body.epsTTM,
-        roe:req.body.roe,
-        aboutCompany:req.body.aboutCompany,
-        organization:req.body.organization,
-        foundedYear:req.body.foundedYear,
-        managingDirector:req.body.managingDirector,
-        shareHoldingPattern:req.body.shareHoldingPattern,
-        brandImg:req.body.brandImg,
-        sector:req.body.sector,
-        division:req.body.division,
-        address:req.body.address,
-        phone:req.body.phone,
-        launchDate:req.body.launchDate,
-        email:req.body.email,
-        website:req.body.website
-    },{new:true})
-    .then(adminStock => {
-        if(!adminStock) {
-            return res.status(404).send({
-                message: "Stock with this " + req.query.stockId
-            });
-        }
-        res.send(adminStock);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Stock found with id " + req.query.stockId
-            });                
-        }
-        return res.status(500).send({
-            message: "Error updating Stock with id " + req.query.stockId
-        });
-    });
-};
+    const adminStock = {
+        stockName: req.body.stockName,
+        marketCap: req.body.marketCap,
+        peRatio: req.body.peRatio,
+        pbRatio: req.body.pbRatio,
+        industryPE: req.body.industryPE,
+        divYield: req.body.divYield,
+        bookValue: req.body.bookValue,
+        epsTTM: req.body.epsTTM,
+        roe: req.body.roe,
+        aboutCompany: req.body.aboutCompany,
+        organization: req.body.organization,
+        foundedYear: req.body.foundedYear,
+        managingDirector: req.body.managingDirector,
+        shareHoldingPattern: req.body.shareHoldingPattern,
+        brandImg: req.body.brandImg,
+        sector: req.body.sector,
+        division: req.body.division,
+        address: req.body.address,
+        phone: req.body.phone,
+        launchDate: req.body.launchDate,
+        email: req.body.email,
+        website: req.body.website
+    }
 
-exports.delete = (req, res) => {
-    console.log(req.query.stockId)
-    AdminStock.findOneAndDelete({_id:req.query.stockId})
+    AdminStock.findByIdAndUpdate({ _id: req.query.stockId }, adminStock,{new:true})
     .then(adminStock => {
-        if(!adminStock) {
-            return res.status(404).send({
-                message: "Stock not found with id " + req.query.stockId
-            });
-        }
-        res.send({message: "Stock deleted successfully!"});
-    }).catch(err => {
-        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
-            return res.status(404).send({
-                message: "Stock not found with id " + req.query.stockId
-            });                
-        }
-        return res.status(500).send({
-            message: "Could not delete Stock with id " + req.query.stockId
-        });
-    });
-};
+        res.status(200).json({data:adminStock, msg:"Stock Updated Successfully!"});
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: err.message || "Error"
+        })
+    })
+}
+
+exports.delete = (req,res) => {
+    AdminStock.findByIdAndDelete(req.query.stockId)
+    .then(data => {
+        res.status(200).json({msg:"Stock Deleted Successfully!"})
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: err.message || "Error"
+        })
+    })
+}
+
+

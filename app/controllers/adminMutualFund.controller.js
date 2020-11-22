@@ -1,7 +1,6 @@
 const AdminMutualFund = require('../models/adminMutualFund.model');
 
 exports.save = (req,res) =>{
-    console.log(req.body)
     const adminMutualFund = new AdminMutualFund({
         fundName:req.body.fundName,
         marketCap:req.body.marketCap,
@@ -26,7 +25,7 @@ exports.save = (req,res) =>{
 
     adminMutualFund.save()
     .then(data=>{
-        res.send(data)
+        res.status(200).json({data:data,msg:"MutualFund Added Successfully!"})
     }).catch(err=>{
         res.status(500).send({
             message: err.message || "Error"
@@ -46,7 +45,6 @@ exports.list = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    console.log(req.query.fundId)
     AdminMutualFund.findById(req.query.fundId)
     .then(adminMutualFund => {
         if(!adminMutualFund) {
@@ -68,7 +66,6 @@ exports.findOne = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    console.log(req.query.fundId)
     AdminMutualFund.findOneAndUpdate({_id:req.query.fundId}, {
         fundName:req.body.fundName,
         marketCap:req.body.marketCap,
@@ -83,7 +80,11 @@ exports.update = (req, res) => {
         fundSize:req.body.fundSize,
         rating:req.body.rating,
         topHoldings:req.body.topHoldings,
-        fundManagers:req.body.fundManagers
+        fundManagers:req.body.fundManagers,
+        fundEmail:req.body.fundEmail,
+        fundWebsite: req.body.fundWebsite,
+        fundPhone: req.body.fundPhone,
+        fundAddress:req.body.fundAddress
     },{new:true})
     .then(adminMutualFund => {
         if(!adminMutualFund) {
@@ -91,7 +92,7 @@ exports.update = (req, res) => {
                 message: "Not Found with this " + req.query.fundId
             });
         }
-        res.send(adminMutualFund);
+        res.json({data:adminMutualFund,msg:"MutualFund Updated Successfully!"});
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -105,7 +106,6 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-    console.log(req.query.fundId)
     AdminMutualFund.findOneAndDelete({_id:req.query.fundId})
     .then(adminMutualFund => {
         if(!adminMutualFund) {
@@ -113,7 +113,7 @@ exports.delete = (req, res) => {
                 message: "Mutual Fund not found with id " + req.query.fundId
             });
         }
-        res.send({message: "Mutual Fund deleted successfully!"});
+        res.status(200).json({msg: "MutualFund deleted successfully!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
