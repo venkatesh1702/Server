@@ -2,18 +2,22 @@ const mongoose = require('mongoose');
 
 const adminMutualFund = mongoose.Schema({
     fundName:String,
-    marketCap:String,
+    marketCap:Number,
     risk:String,
-    nav:String,
-    minSIPAmount:String,
-    minFirstInvestment:String,
-    minSecondInvestment:String,
+    nav:Number,
+    minSIPAmount:Number,
+    minFirstInvestment:Number,
+    minSecondInvestment:Number,
     exitLoad:String,
     fundStarted:String,
     expenseRatio:String,
     fundSize:String,
-    rating:String,
+    rating:Number,
     fundLaunchDate: String,
+    investingSector: String,
+    fundCompany: String,
+    sipAvailable: String,
+    lumpsumAvailable: String,
     topHoldings:{
       type:[]
     },

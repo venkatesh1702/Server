@@ -15,12 +15,16 @@ exports.save = (req,res) =>{
         fundSize:req.body.fundSize,
         rating:req.body.rating,
         fundLaunchDate:req.body.fundLaunchDate,
+        investingSector: req.body.investingSector,
         topHoldings:req.body.topHoldings,
         fundManagers:req.body.fundManagers,
         fundEmail:req.body.fundEmail,
         fundWebsite: req.body.fundWebsite,
         fundPhone: req.body.fundPhone,
-        fundAddress:req.body.fundAddress
+        fundAddress:req.body.fundAddress,
+        fundCompany: req.body.fundCompany,
+        sipAvailable: req.body.sipAvailable,
+        lumpsumAvailable: req.body.lumpsumAvailable
     })
 
     adminMutualFund.save()
@@ -79,12 +83,17 @@ exports.update = (req, res) => {
         expenseRatio:req.body.expenseRatio,
         fundSize:req.body.fundSize,
         rating:req.body.rating,
+        fundLaunchDate:req.body.fundLaunchDate,
+        investingSector: req.body.investingSector,
         topHoldings:req.body.topHoldings,
         fundManagers:req.body.fundManagers,
         fundEmail:req.body.fundEmail,
         fundWebsite: req.body.fundWebsite,
         fundPhone: req.body.fundPhone,
-        fundAddress:req.body.fundAddress
+        fundAddress:req.body.fundAddress,
+        fundCompany: req.body.fundCompany,
+        sipAvailable: req.body.sipAvailable,
+        lumpsumAvailable: req.body.lumpsumAvailable
     },{new:true})
     .then(adminMutualFund => {
         if(!adminMutualFund) {
@@ -125,3 +134,26 @@ exports.delete = (req, res) => {
         });
     });
 };
+
+
+exports.findOneByName = (req, res) => {
+    AdminMutualFund.find({fundName:req.params.fundName})
+    .then(adminMutualFund => {
+        if(!adminMutualFund) {
+            return res.status(404).send({
+                message: "Note not found with name " + req.params.fundName
+            });            
+        }
+        res.send(adminMutualFund);
+        console.log(adminMutualFund);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Note not found with name " + req.params.fundName
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving note with name " + req.params.fundName
+        });
+    });
+}; 
