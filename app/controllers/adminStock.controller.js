@@ -64,7 +64,7 @@ exports.findOne = (req,res) => {
             message: err.message || "Error"
         })
     })
-}
+};
 
 exports.update = (req, res) => {
     const adminStock = {
