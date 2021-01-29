@@ -50,7 +50,7 @@ router.post('/login', async (req,res) =>{
     
     // res.header('auth-token',token).send(token)
     res.status(200).json({
-        data: { email: userDetails.email, role: userDetails.role },
+        data: { email: userDetails.email, role: userDetails.role,userId:userDetails._id},
         token
     })
 
